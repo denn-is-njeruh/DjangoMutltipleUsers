@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin
 from django.db import models
 from .managers import UserManager
@@ -25,14 +26,14 @@ class User(AbstractBaseUser,PermissionsMixin):
         return self.email
 
 
-# class user_type(models.Model):
-#     is_teach = models.BooleanField(default=False)
-#     is_student = models.BooleanField(default=False)
-#     user = models.OneToOneField(User, on_delete=models.CASCADE)
+class user_type(models.Model):
+    is_teach = models.BooleanField(default=False)
+    is_student = models.BooleanField(default=False)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
-#     def __str__(self):
-#         if self.is_student == True:
-#             return User.get_email(self.user) + " - is_student"
-#         else:
-#             return User.get_email(self.user) + "- is_teacher"
+    def __str__(self):
+        if self.is_student == True:
+            return User.get_email(self.user) + " - is_student"
+        else:
+            return User.get_email(self.user) + "- is_teacher"
     
